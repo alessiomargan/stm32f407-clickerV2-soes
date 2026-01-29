@@ -34,7 +34,7 @@ The project uses a partitioned flash layout to support bootloader and persistent
 
 The project uses git submodules for external dependencies:
 
-- **SOES**: EtherCAT slave stack from [Advanced-Robotics-Facility/SOES](https://github.com/Advanced-Robotics-Facility/SOES) (branch: `main_advr`)
+- **SOES**: EtherCAT slave stack from [alessiomargan/SOES](https://github.com/alessiomargan/SOES.git) (branch: `main_advr`)
 - **uc_test**: Test framework from [alessiomargan/uc-test](https://github.com/alessiomargan/uc-test) (branch: `soes_main`)
 
 ## Getting Started
@@ -160,6 +160,7 @@ This project incorporates:
 
 ## Related Projects
 
+- [bl-stm32f407](https://github.com/alessiomargan/bl-stm32f407): Bootloader for STM32F407 (STM32CubeIDE project - needs CMake migration)
 - [stm32f429-disco-soes](https://github.com/alessiomargan/stm32f429-disco-soes): Similar project for STM32F429 Discovery board
 - [SOES](https://github.com/OpenEtherCATsociety/SOES): Original SOES repository
 

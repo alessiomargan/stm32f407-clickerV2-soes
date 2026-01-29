@@ -4,5 +4,5 @@
 	branch = main_advr
 [submodule "external/uc_test"]
 	path = external/uc_test
-	url = git@github.com:alessiomargan/uc-test.git
+	url = https://github.com/alessiomargan/uc-test.git
 	branch = soes_main
