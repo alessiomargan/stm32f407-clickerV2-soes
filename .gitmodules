@@ -1,0 +1,8 @@
+[submodule "external/soes"]
+	path = external/soes
+	url = https://github.com/Advanced-Robotics-Facility/SOES.git
+	branch = main_advr
+[submodule "external/uc_test"]
+	path = external/uc_test
+	url = git@github.com:alessiomargan/uc-test.git
+	branch = soes_main
