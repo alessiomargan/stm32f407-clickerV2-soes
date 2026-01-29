@@ -53,6 +53,7 @@ set(UC_TEST_COMMON_SOURCES
 )
 
 set(UC_TEST_STM32F4_SOURCES
+    ${GIT_UC_TEST}/stm32f4xx/soes_test/can_code.c
     ${GIT_UC_TEST}/stm32f4xx/soes_test/user_code.c
     ${GIT_UC_TEST}/stm32f4xx/soes_test/flash_utils.c
 )

@@ -41,7 +41,11 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+extern CRC_HandleTypeDef hcrc;
+extern TIM_HandleTypeDef htim7;
+extern SPI_HandleTypeDef hspi3;
+extern UART_HandleTypeDef huart4;
+extern CAN_HandleTypeDef hcan1;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -67,9 +71,6 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-extern SPI_HandleTypeDef hspi3;
-extern TIM_HandleTypeDef htim7;
-extern UART_HandleTypeDef huart4;
 
 /* USER CODE END EFP */
 
