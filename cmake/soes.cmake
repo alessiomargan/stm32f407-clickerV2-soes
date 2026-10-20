@@ -38,9 +38,8 @@ set(SOES_SOURCES
     ${GIT_SOES}/soes/esc_eep.c
     ${GIT_SOES}/soes/esc_eoe.c
     ${GIT_SOES}/soes/esc_foe.c
-    #${GIT_SOES}/soes/hal/advr_esc/esc_hw_et1100.c
-    ${GIT_SOES}/soes/hal/advr_esc/esc_hw_lan9252_spi.c
     ${GIT_SOES}/soes/hal/advr_esc/esc_hw_lan9252.c
+    ${GIT_SOES}/soes/hal/advr_esc/esc_hw_lan9252_spi.c
     ${GIT_SOES}/soes/hal/advr_esc/hal_ec_STM32F4xx.c
 )
 
@@ -53,9 +52,9 @@ set(UC_TEST_COMMON_SOURCES
 )
 
 set(UC_TEST_STM32F4_SOURCES
-    ${GIT_UC_TEST}/stm32f4xx/soes_test/can_code.c
     ${GIT_UC_TEST}/stm32f4xx/soes_test/user_code.c
     ${GIT_UC_TEST}/stm32f4xx/soes_test/flash_utils.c
+    ${GIT_UC_TEST}/stm32f4xx/soes_test/can_code.c
 )
 
 set(UC_TEST_SOURCES ${UC_TEST_COMMON_SOURCES} ${UC_TEST_STM32F4_SOURCES})
@@ -74,15 +73,20 @@ endif()
 set(BUILD_INFO_DIR ${CMAKE_BINARY_DIR}/generated)
 set(BUILD_INFO_HEADER ${BUILD_INFO_DIR}/include/build_info.h)
 
-add_custom_command(
-    OUTPUT ${BUILD_INFO_HEADER}
-    COMMAND /bin/bash ${GIT_UC_TEST}/common_src/gen_build_info.sh ${BUILD_INFO_DIR}
+# Git revisions, dirty state, and timestamps can change without a source edit.
+# Run on every build and finish before any consumer compiles the header.
+add_custom_target(generate_build_info
+    COMMAND /bin/bash "${GIT_UC_TEST}/common_src/gen_build_info.sh" "${BUILD_INFO_DIR}"
+    BYPRODUCTS "${BUILD_INFO_HEADER}"
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     COMMENT "Generating build info..."
     VERBATIM
-    DEPENDS ${GIT_UC_TEST}/common_src/gen_build_info.sh
 )
 
-add_custom_target(generate_build_info DEPENDS ${BUILD_INFO_HEADER})
+# External sources are compiled by this object library, which must wait too.
+if(TARGET STM32_Drivers)
+    add_dependencies(STM32_Drivers generate_build_info)
+endif()
 
 if(TARGET ${CMAKE_PROJECT_NAME})
     add_dependencies(${CMAKE_PROJECT_NAME} generate_build_info)

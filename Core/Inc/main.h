@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2026 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -46,6 +46,7 @@ extern TIM_HandleTypeDef htim7;
 extern SPI_HandleTypeDef hspi3;
 extern UART_HandleTypeDef huart4;
 extern CAN_HandleTypeDef hcan1;
+
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -65,6 +66,7 @@ extern CAN_HandleTypeDef hcan1;
 #define DBG_2_TGL	HAL_GPIO_TogglePin(DBG_2_GPIO_Port, DBG_2_Pin)
 #define DBG_2_ON	HAL_GPIO_WritePin(DBG_2_GPIO_Port, DBG_2_Pin, GPIO_PIN_SET)
 #define DBG_2_OFF	HAL_GPIO_WritePin(DBG_2_GPIO_Port, DBG_2_Pin, GPIO_PIN_RESET)
+
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
