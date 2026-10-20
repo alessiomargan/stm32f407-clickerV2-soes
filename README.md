@@ -22,8 +22,8 @@ Visual Studio Code, STM32CubeIDE, and command-line builds.
 ├── Drivers/                       # STM32 HAL and CMSIS
 ├── external/
 │   ├── soes/                      # EtherCAT stack submodule
-│   └── uc_test/                   # Application and CAN code submodule
-├── scripts/can_rtr_test.sh         # Linux CAN RTR test helper
+│   └── uc_test/                   # Application, CAN code, and shared helpers
+│       └── scripts/               # Linux CAN setup and RTR test scripts
 ├── .vscode/                       # VS Code build and debug configuration
 ├── .project / .cproject           # STM32CubeIDE project metadata
 ├── stm32f407-clickerV2-soes.ioc    # CubeMX board configuration
@@ -275,5 +275,23 @@ The corresponding bootloader is
 [bl-stm32f407](https://github.com/alessiomargan/bl-stm32f407).
 
 Board configuration is stored in `stm32f407-clickerV2-soes.ioc`.
-The `scripts/can_rtr_test.sh` helper sends CAN RTR requests from Linux using
+The `external/uc_test/scripts/can_rtr_test.sh` helper sends CAN RTR requests from Linux using
 `can-utils`; run it with `--help` for usage.
+
+## Linux CAN helpers
+
+The CAN scripts are maintained in the `uc-test` submodule and shared across
+firmware projects. Initialize the submodules, then run these commands on the
+Linux CAN host:
+
+```sh
+./external/uc_test/scripts/setup_can0.sh
+./external/uc_test/scripts/can_rtr_test.sh can0 test
+```
+
+The setup script requests sudo privileges to configure the existing `can0`
+interface at 250000 bit/s. The RTR test requires `can-utils`.
+See `external/uc_test/scripts/README.md` for load testing and traffic monitoring.
+The `uc_test` tracking branch is `stm32f4xx`; the parent repository pins its exact
+commit. Update the shared scripts in that submodule rather than copying them
+into the firmware repository.
