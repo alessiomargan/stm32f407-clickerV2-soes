@@ -4,6 +4,8 @@
 BUILD_DIR := build/Debug
 ELF := $(BUILD_DIR)/stm32f407-clickerV2-soes.elf
 BIN := $(BUILD_DIR)/stm32f407-clickerV2-soes.bin
+DEPLOY_HOST ?= embedded@rpi4
+REMOTE_FIRMWARE_DIR ?= /home/embedded/.ecat_master/firmware
 ECAT_FIRMWARE_DIR ?= $(HOME)/.ecat_master/firmware
 
 # Default target
@@ -28,6 +30,13 @@ bin: build
 deploy: bin
 	mkdir -p "$(ECAT_FIRMWARE_DIR)"
 	cp "$(BIN)" "$(ECAT_FIRMWARE_DIR)/st_lan9252.bin"
+
+# Copy the application to the Raspberry Pi using SSH/SCP.
+.PHONY: deploy_ssh
+deploy_ssh: bin
+	ssh "$(DEPLOY_HOST)" 'mkdir -p "$(REMOTE_FIRMWARE_DIR)"'
+	scp "$(BIN)" "$(DEPLOY_HOST):$(REMOTE_FIRMWARE_DIR)/st_lan9252.bin"
+	ssh "$(DEPLOY_HOST)" 'sha256sum "$(REMOTE_FIRMWARE_DIR)/st_lan9252.bin"'
 
 # Flash via stlink-tools (st-flash)
 .PHONY: flash
